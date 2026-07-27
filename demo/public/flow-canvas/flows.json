@@ -1,0 +1,189 @@
+{
+  "project": "Acme records",
+  "version": "2026-01-01",
+  "flows": [
+    {
+      "id": "global",
+      "name": "Global entry point",
+      "description": "Records list → new record → confirm.",
+      "notes": [
+        "The list is the only entry point that opens the modal empty — the detail page pre-fills it.",
+        "Screens captured from the fixture pages in public/fixtures/. In a real app they would come from a /dev/screens harness."
+      ],
+      "stages": [{ "id": "global__created", "kind": "end", "label": "Record created" }],
+      "screens": [
+        {
+          "id": "list",
+          "title": "Records list",
+          "route": "/records",
+          "image": "screens/01-list.jpg",
+          "status": "ready",
+          "live": "/fixtures/list.html",
+          "description": "Whole page, nav bar included — the reader needs to see where the user was before the modal opened.",
+          "notes": [
+            "Rows are sorted by last change, not by state.",
+            "The chevron opens the detail page; the row body does nothing."
+          ],
+          "hotspots": [
+            {
+              "id": "list__new",
+              "label": "New record",
+              "x": 82,
+              "y": 11.8,
+              "w": 12.6,
+              "h": 4.1,
+              "note": "Opens the modal with nothing pre-filled"
+            },
+            {
+              "id": "list__chevron",
+              "label": "Row chevron",
+              "x": 91,
+              "y": 19.9,
+              "w": 2.5,
+              "h": 5,
+              "note": "Opens the detail page — see the Detail page flow"
+            }
+          ]
+        },
+        {
+          "id": "modal-empty",
+          "title": "New record — empty",
+          "route": "step: create",
+          "image": "screens/02-modal-empty.jpg",
+          "status": "ready",
+          "live": "/fixtures/modal-empty.html",
+          "description": "Name and owner. Both are editable later, which is why there is no warning about getting it wrong.",
+          "notes": [
+            "Fields validate on blur, not on submit.",
+            "Continue stays enabled and shows inline errors — deliberate, so the user isn't left guessing why a disabled button won't move."
+          ],
+          "hotspots": [
+            { "id": "modal-empty__cancel", "label": "Cancel", "x": 32.5, "y": 63.8, "w": 13.8, "h": 4 },
+            { "id": "modal-empty__continue", "label": "Continue", "x": 53.6, "y": 63.8, "w": 13.9, "h": 4 }
+          ]
+        },
+        {
+          "id": "modal-confirm",
+          "title": "Confirm details",
+          "route": "step: confirm",
+          "image": "screens/03-modal-confirm.jpg",
+          "status": "ready",
+          "live": "/fixtures/modal-confirm.html",
+          "description": "Read-only recap. Creating the record notifies the owner.",
+          "notes": ["Back returns to the form with the values kept — it does not reset."],
+          "hotspots": [
+            { "id": "modal-confirm__back", "label": "Back", "x": 32.5, "y": 63.8, "w": 13.8, "h": 4 },
+            { "id": "modal-confirm__create", "label": "Create record", "x": 53.6, "y": 63.8, "w": 13.9, "h": 4 }
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "from": "list",
+          "fromHotspot": "list__new",
+          "to": "modal-empty",
+          "action": "Click 'New record'",
+          "variant": "primary"
+        },
+        {
+          "from": "modal-empty",
+          "fromHotspot": "modal-empty__continue",
+          "to": "modal-confirm",
+          "action": "Click 'Continue'",
+          "condition": "name and owner are set",
+          "variant": "primary"
+        },
+        {
+          "from": "modal-confirm",
+          "fromHotspot": "modal-confirm__create",
+          "to": "global__created",
+          "action": "Click 'Create record'",
+          "variant": "primary"
+        },
+        {
+          "from": "modal-confirm",
+          "fromHotspot": "modal-confirm__back",
+          "to": "modal-empty",
+          "action": "Back",
+          "variant": "back"
+        },
+        {
+          "from": "modal-empty",
+          "fromHotspot": "modal-empty__cancel",
+          "to": "list",
+          "action": "Cancel",
+          "variant": "back"
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "name": "Detail page",
+      "description": "Second entry point: a single record.",
+      "notes": ["Opens the modal with the record pre-selected, so the empty form is never shown here."],
+      "screens": [
+        {
+          "id": "record-detail",
+          "title": "Record detail",
+          "route": "/records/:id",
+          "image": "screens/20-detail.jpg",
+          "status": "ready",
+          "live": "/fixtures/detail.html",
+          "description": "The same primary CTA as the list, in the same place — it is the only control that opens the modal.",
+          "notes": ["The state pill is a label, not a control. Changing state happens from the actions menu."],
+          "hotspots": [{ "id": "record-detail__new", "label": "New record", "x": 82, "y": 11.8, "w": 12.6, "h": 4.1 }]
+        },
+        {
+          "id": "detail-modal",
+          "title": "New record from detail",
+          "route": "step: create",
+          "image": "screens/21-detail-modal.jpg",
+          "status": "ready",
+          "live": "/fixtures/detail-modal.html",
+          "notes": ["Identical modal — the entry point only decides what it opens with."]
+        }
+      ],
+      "transitions": [
+        {
+          "from": "record-detail",
+          "fromHotspot": "record-detail__new",
+          "to": "detail-modal",
+          "action": "Click 'New record'",
+          "variant": "primary"
+        }
+      ]
+    },
+    {
+      "id": "states",
+      "name": "Edge cases & states",
+      "description": "Everything the happy path doesn't show.",
+      "notes": [
+        "A lane with no transitions is laid out as a plain row rather than a journey.",
+        "Both states below are worth capturing because neither is reachable from the happy path."
+      ],
+      "screens": [
+        {
+          "id": "loading",
+          "title": "Loading",
+          "image": "screens/30-loading.jpg",
+          "status": "ready",
+          "live": "/fixtures/loading.html",
+          "notes": ["Skeleton keeps the row height, so the page doesn't jump when data lands."]
+        },
+        {
+          "id": "empty",
+          "title": "Empty list",
+          "image": "screens/31-empty.jpg",
+          "status": "wip",
+          "live": "/fixtures/empty.html",
+          "noteTone": "warn",
+          "notes": [
+            "First-run state. The CTA moves into the card and the one in the header is dropped.",
+            "Copy is placeholder — needs a pass before ship."
+          ]
+        }
+      ],
+      "transitions": []
+    }
+  ]
+}

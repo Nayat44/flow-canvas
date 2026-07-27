@@ -79,11 +79,16 @@ const Canvas: FC = () => {
   }, [graph, activeFlow, setNodes, setEdges])
 
   // Refit on view changes only — a note edit re-renders the graph, and moving the
-  // viewport out from under the editor would be maddening.
+  // viewport out from under the editor would be maddening. Twice, because the
+  // screenshots land after mount and change every card's height: the first pass
+  // frames what is measured so far, the second frames the loaded graph.
   useEffect(() => {
-    const timer = setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 60)
-    return () => clearTimeout(timer)
-  }, [activeFlow, showNotes, showHotspots, showLive, fitView])
+    const timers = [
+      setTimeout(() => fitView({ padding: 0.15, duration: 200 }), 250),
+      setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 1200)
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [activeFlow, showNotes, showHotspots, showLive, nodes.length, fitView])
 
   const setNotes = useCallback(
     (target: NotesTarget, notes: string[]) => {

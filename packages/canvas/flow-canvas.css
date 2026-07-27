@@ -27,7 +27,7 @@
 
   --fc-radius: 10px;
   --fc-radius-sm: 6px;
-  --fc-font: inherit;
+  --fc-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   font-family: var(--fc-font);
   color: var(--fc-fg);

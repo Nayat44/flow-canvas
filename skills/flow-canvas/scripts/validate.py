@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Check a flows.json for broken references before you spend time in the browser.
 
-Usage: python3 .claude/skills/flow-canvas/scripts/validate.py \
-           apps/web-borrow/public/flow-canvas/flows.json
+Usage: python3 scripts/validate.py path/to/public/flow-canvas/flows.json
 
 Reports: unknown from/to ids, fromHotspot ids that do not exist on their source
 screen, out-of-range hotspot coordinates, duplicate screen ids, missing image files,

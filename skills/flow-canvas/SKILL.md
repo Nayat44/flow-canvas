@@ -26,7 +26,7 @@ stylesheet with CSS variables, inline icons, `@xyflow/react` + `@dagrejs/dagre` 
     https://github.com/Nayat44/flow-canvas
 
 Paths below are relative to this skill folder (`references/`, `scripts/`) or to the repo
-(`packages/`, `examples/`).
+(`packages/`, `demo/`, `examples/`).
 
 ## Workflow
 
@@ -65,7 +65,7 @@ The harness route takes query params for every state worth capturing:
 
 `scripts/capture-screens.mjs` (in this skill folder) drives headless Chrome over CDP: navigate, optionally
 click through to a state that has no URL of its own, screenshot at 1440×950 @2x. Node
-22's global `WebSocket` means no puppeteer dependency. Point it at a shots config — start from `examples/shots.example.mjs` in the repo.
+22's global `WebSocket` means no puppeteer dependency. Point it at a shots config — copy `demo/flow-canvas.shots.mjs` from the repo and repoint the URLs.
 
 Rules that matter:
 

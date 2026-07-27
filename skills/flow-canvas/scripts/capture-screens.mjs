@@ -4,7 +4,7 @@
 //   node scripts/capture-screens.mjs [config.mjs] [out-dir]
 //
 // The config default-exports { baseUrl, width, height, shots }. See
-// examples/shots.example.mjs. Screens normally come from a /dev/screens harness that
+// demo/flow-canvas.shots.mjs for a working one. Screens normally come from a /dev/screens harness that
 // renders the real pages over mocked contexts (references/capture-harness.md).
 
 import { spawn } from 'node:child_process'

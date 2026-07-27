@@ -1,0 +1,50 @@
+/* A small pretend product, so the demo canvas shows real screens with real controls.
+   Geometry here is what the hotspot percentages in flows.json are measured against. */
+* { box-sizing: border-box; margin: 0; }
+body {
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #14161a; background: #f4f5f7; height: 950px; overflow: hidden;
+}
+.bar {
+  height: 64px; display: flex; align-items: center; gap: 28px;
+  padding: 0 32px; background: #fff; border-bottom: 1px solid #e3e6ea;
+}
+.bar strong { font-size: 17px; letter-spacing: -0.01em; }
+.bar a { color: #6b7280; text-decoration: none; font-size: 14px; }
+.bar .spacer { flex: 1; }
+.bar .avatar { width: 30px; height: 30px; border-radius: 50%; background: #dfe3e8; }
+.page { padding: 48px 80px 0; }
+.head { display: flex; align-items: center; height: 40px; }
+.head h1 { font-size: 26px; letter-spacing: -0.02em; }
+.head .spacer { flex: 1; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 40px; width: 180px; border-radius: 8px;
+  background: #14161a; color: #fff; font-size: 14px; font-weight: 600; border: 0;
+}
+.btn--ghost { background: #fff; color: #14161a; border: 1px solid #e3e6ea; }
+.table { margin-top: 28px; background: #fff; border: 1px solid #e3e6ea; border-radius: 12px; overflow: hidden; }
+.row { height: 64px; display: flex; align-items: center; gap: 24px; padding: 0 24px; border-bottom: 1px solid #eef0f3; }
+.row:last-child { border-bottom: 0; }
+.row .name { width: 220px; font-weight: 600; }
+.row .meta { color: #6b7280; font-size: 14px; }
+.row .spacer { flex: 1; }
+.pill { padding: 4px 10px; border-radius: 999px; background: #f0f2f5; color: #4a5057; font-size: 12px; }
+.chev { color: #9aa2ab; }
+.overlay { position: fixed; inset: 0; background: rgb(20 22 26 / 45%); }
+.modal {
+  position: fixed; left: 440px; top: 265px; width: 560px; height: 420px;
+  background: #fff; border-radius: 14px; padding: 28px; box-shadow: 0 24px 60px rgb(0 0 0 / 25%);
+}
+.modal h2 { font-size: 20px; letter-spacing: -0.01em; }
+.modal p { color: #6b7280; margin-top: 6px; font-size: 14px; }
+.field { margin-top: 22px; }
+.field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.field .input { height: 42px; border: 1px solid #e3e6ea; border-radius: 8px; background: #fafbfc; }
+.modal .actions { position: absolute; left: 28px; right: 28px; top: 340px; display: flex; gap: 12px; }
+.modal .actions .btn { width: 200px; }
+.modal .actions .grow { flex: 1; }
+.empty { margin-top: 28px; background: #fff; border: 1px solid #e3e6ea; border-radius: 12px; padding: 64px; text-align: center; }
+.empty h3 { font-size: 18px; }
+.empty p { color: #6b7280; margin: 8px 0 20px; }
+.skeleton { height: 14px; border-radius: 7px; background: #eef0f3; }

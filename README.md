@@ -7,6 +7,9 @@ on the canvas.
 Built as a **Claude Code skill** plus a portable React implementation, so a designer can
 ask Claude to map a feature and get the same result every time.
 
+![A lane of the demo canvas: three whole screens, arrows leaving the buttons that cause
+them, notes under each card](docs/canvas.png)
+
 ## What makes it different from a boxes-and-arrows diagram
 
 - **Whole screens, entry points included.** Every node is a full-page capture — nav bar,
@@ -18,6 +21,23 @@ ask Claude to map a feature and get the same result every time.
 - **Notes are the deliverable, and designers own them.** Edit on the canvas; the change
   is written back to `flows.json` and shows up in `git diff`.
 - **Every card links to the state running for real**, and can embed it live in the card.
+
+## See it working first
+
+```bash
+git clone https://github.com/Nayat44/flow-canvas.git
+cd flow-canvas
+npm install
+npm run demo          # http://localhost:5173
+```
+
+That's a real canvas of a pretend product ("Acme records"), captured from the fixture
+pages in `demo/public/fixtures/`. Everything works: filter a lane, toggle click targets,
+edit a note, drag a label, export a PNG. Re-shoot the screens with `npm run demo:capture`
+and watch the map follow the fixtures.
+
+`demo/public/flow-canvas/flows.json` is the worked example to copy from —
+`references/flows-schema.md` explains every field in it.
 
 ## Install the skill
 
@@ -56,9 +76,11 @@ skills/flow-canvas/                   ← copy-paste this into ~/.claude/skills/
   scripts/capture-screens.mjs         re-captures every screen over CDP
   scripts/click-helpers.mjs           click steps for states with no URL
 packages/canvas/                      the canvas — copy this into your app
-examples/flows.example.json           a valid document to start from
-examples/shots.example.mjs            a capture config to start from
-examples/screens-preview.example.tsx  the dev harness pattern
+demo/                                 runnable demo: npm run demo
+  public/fixtures/                    a pretend product to capture
+  public/flow-canvas/flows.json       a real document to copy from
+  flow-canvas.shots.mjs               a real capture config to copy from
+examples/screens-preview.example.tsx  the dev harness pattern for a real app
 ```
 
 ## Adding the canvas to an app
@@ -81,7 +103,12 @@ npm i @xyflow/react @dagrejs/dagre html-to-image
    export default defineConfig({ plugins: [react(), flowCanvasWriter()] })
    ```
 4. Put your document at `public/flow-canvas/flows.json` and screenshots in
-   `public/flow-canvas/screens/`. Start from `examples/flows.example.json`.
+   `public/flow-canvas/screens/`. Start from `demo/public/flow-canvas/flows.json`.
+5. Capture the screens: copy `demo/flow-canvas.shots.mjs`, point the URLs at your app
+   (ideally a `/dev/screens` harness — see `references/capture-harness.md`), then
+   ```bash
+   node skills/flow-canvas/scripts/capture-screens.mjs flow-canvas.shots.mjs
+   ```
 
 It ships its own stylesheet — no Tailwind, no design system. Restyle by overriding the
 CSS variables on `.flow-canvas`:

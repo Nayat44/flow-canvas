@@ -85,7 +85,10 @@ const ScreenNodeComponent = ({ id, data, selected }: NodeProps<ScreenFlowNode>) 
             </button>
           )
         ) : data.image ? (
-          <img src={data.image} alt={data.title} draggable={false} />
+          // A screenshot lands after mount and changes the card's height. Without a
+          // re-measure the graph is laid out against header-only nodes, and the first
+          // fitView zooms into almost nothing.
+          <img src={data.image} alt={data.title} draggable={false} onLoad={() => updateNodeInternals(id)} />
         ) : (
           <div className="fc-screen__placeholder">No screenshot</div>
         )}
