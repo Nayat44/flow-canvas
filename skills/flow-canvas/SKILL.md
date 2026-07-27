@@ -7,7 +7,7 @@ description: Build an interactive flow canvas — a React Flow map of every scre
 
 Turns a product area into a browsable map that lives **inside the app it documents**.
 
-Gives you a full overview of your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
+Drop it into your existing app or prototype and get a full overview of all your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
 
 Three properties make it worth the effort, and all three are load-bearing:
 

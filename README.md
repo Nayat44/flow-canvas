@@ -1,6 +1,6 @@
 # flow-canvas
 
-Gives you a full overview of your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
+Drop it into your existing app or prototype and get a full overview of all your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
 
 A flow map that lives inside the app it documents: whole screens with their entry points,
 arrows anchored to the exact control the user clicks, and notes designers edit on the

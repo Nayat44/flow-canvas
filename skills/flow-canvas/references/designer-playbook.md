@@ -1,6 +1,6 @@
 # Flow canvas — designer playbook
 
-Gives you a full overview of your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
+Drop it into your existing app or prototype and get a full overview of all your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
 
 For designers who want that without writing any of it: you give Claude the feature, it
 gives you a canvas inside the app, and you edit the notes yourself.
