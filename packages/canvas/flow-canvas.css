@@ -1,0 +1,263 @@
+@import '@xyflow/react/dist/style.css';
+
+/* Flow canvas — self-contained styles. No Tailwind, no design system: override the
+   variables below to match your product and nothing else needs to change. */
+
+.flow-canvas {
+  --fc-canvas: #f4f5f7;
+  --fc-surface: #ffffff;
+  --fc-subtle: #f4f5f7;
+  --fc-border: #e3e6ea;
+  --fc-border-strong: #b8bfc7;
+  --fc-fg: #14161a;
+  --fc-fg-secondary: #4a5057;
+  --fc-fg-muted: #8b9199;
+  --fc-inverse-bg: #14161a;
+  --fc-inverse-fg: #ffffff;
+
+  --fc-primary: #f26b3a;
+  --fc-alt: #3a7bf2;
+  --fc-error: #e03b3b;
+  --fc-back: #8b9199;
+
+  --fc-warn-bg: #fdf1e8;
+  --fc-warn-border: #f3d5be;
+  --fc-info-bg: #eaf1fd;
+  --fc-info-border: #c6d8f7;
+
+  --fc-radius: 10px;
+  --fc-radius-sm: 6px;
+  --fc-font: inherit;
+
+  font-family: var(--fc-font);
+  color: var(--fc-fg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .flow-canvas {
+    --fc-canvas: #0e0f12;
+    --fc-surface: #16181d;
+    --fc-subtle: #1c1f25;
+    --fc-border: #262a31;
+    --fc-border-strong: #3a3f48;
+    --fc-fg: #e8e9ec;
+    --fc-fg-secondary: #b4b8bf;
+    --fc-fg-muted: #8b8f99;
+    --fc-inverse-bg: #e8e9ec;
+    --fc-inverse-fg: #14161a;
+    --fc-warn-bg: #241a12;
+    --fc-warn-border: #4a3826;
+    --fc-info-bg: #121a24;
+    --fc-info-border: #24384a;
+  }
+}
+
+/* ---- Shell ---- */
+.fc-root { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.fc-viewport {
+  position: relative;
+  height: var(--fc-height, calc(100vh - 320px));
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius);
+  background: var(--fc-canvas);
+}
+.fc-state { display: grid; place-items: center; height: 420px; color: var(--fc-fg-muted); font-size: 13px; }
+
+/* ---- Toolbar ---- */
+.fc-toolbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius);
+  background: var(--fc-surface);
+}
+.fc-toolbar__title { display: flex; flex-direction: column; }
+.fc-toolbar__title strong { font-size: 14px; font-weight: 600; }
+.fc-toolbar__title span { font-size: 11px; color: var(--fc-fg-muted); }
+.fc-toolbar select,
+.fc-toolbar button {
+  font: inherit; font-size: 12px;
+  color: var(--fc-fg);
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+  padding: 5px 9px;
+  cursor: pointer;
+}
+.fc-toolbar button:hover { border-color: var(--fc-border-strong); }
+.fc-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--fc-fg-secondary); cursor: pointer; }
+.fc-toggle input { accent-color: var(--fc-primary); }
+.fc-save { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--fc-fg-muted); }
+.fc-save__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fc-alt); }
+.fc-save--saved .fc-save__dot { background: #21a565; }
+.fc-save--error { color: var(--fc-error); }
+.fc-save--error .fc-save__dot { background: var(--fc-error); }
+
+/* ---- Screen card ---- */
+.fc-screen {
+  overflow: hidden;
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 8%);
+}
+.fc-screen--wip { border-style: dashed; }
+.fc-screen--needs-review { border-color: var(--fc-error); }
+.fc-screen--selected { border-color: var(--fc-border-strong); box-shadow: 0 12px 30px rgb(0 0 0 / 16%); }
+.fc-screen__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  padding: 8px 12px; border-bottom: 1px solid var(--fc-border);
+}
+.fc-screen__title { font-size: 13px; font-weight: 600; }
+.fc-screen__route { font-size: 10px; color: var(--fc-fg-muted); flex-shrink: 0; }
+.fc-screen__live { font-size: 10px; color: var(--fc-fg-muted); text-decoration: none; display: flex; gap: 3px; flex-shrink: 0; }
+.fc-screen__live:hover { color: var(--fc-fg); }
+.fc-screen__shot { position: relative; background: var(--fc-canvas); }
+.fc-screen__shot img { display: block; width: 100%; }
+.fc-screen__placeholder { display: grid; place-items: center; height: 170px; color: var(--fc-fg-muted); font-size: 12px; }
+.fc-screen__hint { padding: 4px 12px; border-top: 1px solid var(--fc-border); background: var(--fc-warn-bg); font-size: 11px; color: var(--fc-fg-secondary); }
+.fc-frame-arm { all: unset; display: grid; place-items: center; gap: 4px; width: 100%; height: 100%; background: var(--fc-subtle); cursor: pointer; text-align: center; padding: 0 16px; }
+.fc-frame-arm strong { font-size: 13px; }
+.fc-frame-arm span { font-size: 11px; color: var(--fc-fg-muted); }
+.fc-frame { border: 0; transform-origin: top left; }
+
+/* ---- Hotspot: the box over the control the user clicks ---- */
+.fc-hotspot {
+  position: absolute;
+  display: flex; align-items: center; gap: 3px;
+  min-height: 14px; padding: 0 3px;
+  border: 1.5px solid var(--fc-primary);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--fc-primary) 15%, transparent);
+}
+.fc-hotspot--hidden { opacity: 0; pointer-events: none; border-color: transparent; background: none; }
+.fc-hotspot__index {
+  display: grid; place-items: center; flex: 0 0 14px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--fc-primary); color: #fff;
+  font-size: 9px; font-weight: 700;
+}
+.fc-hotspot__label { font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* React Flow pins handles to the node edge; re-anchor to the hotspot parent so an
+   edge leaves the exact control rather than the side of the card. */
+.rf-handle-hotspot {
+  position: absolute !important;
+  right: -5px !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 8px; height: 8px; min-width: 0; min-height: 0;
+  background: var(--fc-primary);
+  border: 2px solid var(--fc-surface);
+}
+.rf-handle-edge { opacity: 0; width: 6px; height: 6px; min-width: 0; min-height: 0; }
+
+/* ---- Sticky note ---- */
+.fc-note {
+  display: flex; flex-direction: column; gap: 4px;
+  width: 240px; padding: 8px 12px;
+  border: 1px solid var(--fc-border); border-radius: var(--fc-radius-sm);
+  background: var(--fc-subtle);
+  font-size: 11px; line-height: 1.5;
+}
+.fc-note--warn { background: var(--fc-warn-bg); border-color: var(--fc-warn-border); }
+.fc-note--flow { background: var(--fc-info-bg); border-color: var(--fc-info-border); }
+.fc-note__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 4px; }
+.fc-note__title { font-weight: 600; }
+.fc-note__item { display: flex; align-items: flex-start; justify-content: space-between; gap: 4px; color: var(--fc-fg-secondary); }
+.fc-note__empty { color: var(--fc-fg-muted); }
+
+/* ---- Stage & band ---- */
+.fc-stage {
+  display: flex; align-items: center; justify-content: center;
+  width: 170px; padding: 10px 12px; text-align: center;
+  font-size: 11px; font-weight: 600;
+  background: var(--fc-surface); border: 1px solid var(--fc-border); border-radius: 999px;
+}
+.fc-stage--start { border-color: var(--fc-primary); color: var(--fc-primary); }
+.fc-stage--end { border-color: var(--fc-border-strong); color: var(--fc-fg-muted); }
+.fc-stage--decision { border-radius: var(--fc-radius-sm); border-color: var(--fc-alt); color: var(--fc-alt); }
+
+.fc-band {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 16px 24px; border-radius: var(--fc-radius);
+  background: var(--fc-inverse-bg); color: var(--fc-inverse-fg);
+}
+.fc-band strong { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.fc-band span { font-size: 14px; opacity: 0.7; }
+
+/* ---- Edge label ---- */
+.fc-edge-label {
+  position: absolute;
+  pointer-events: all;
+  display: flex; flex-direction: column; gap: 2px;
+  max-width: 220px; padding: 2px 5px;
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border);
+  border-radius: var(--fc-radius-sm);
+  font-size: 10px;
+}
+.fc-edge-label--primary { border-color: var(--fc-primary); }
+.fc-edge-label--alt { border-color: var(--fc-alt); }
+.fc-edge-label--error { border-color: var(--fc-error); }
+.fc-edge-label--draggable { cursor: grab; }
+.fc-edge-label--dragging { cursor: grabbing; box-shadow: 0 6px 18px rgb(0 0 0 / 18%); }
+.fc-edge-label__action { font-weight: 600; }
+.fc-edge-label__condition { color: var(--fc-fg-muted); font-size: 9px; }
+
+/* ---- Editing affordances ---- */
+.fc-icon-button {
+  all: unset;
+  flex-shrink: 0; cursor: pointer; color: var(--fc-fg-muted);
+  opacity: 0; transition: opacity 120ms ease;
+}
+.fc-note:hover .fc-icon-button,
+.fc-edge-label:hover .fc-icon-button,
+.fc-icon-button:focus-visible { opacity: 1; }
+.fc-icon-button:hover { color: var(--fc-fg); }
+.fc-icon-button--danger:hover { color: var(--fc-error); }
+
+.fc-editor { display: flex; flex-direction: column; gap: 4px; }
+.fc-editor textarea,
+.fc-editor input {
+  font: inherit; font-size: 11px; color: var(--fc-fg);
+  width: 100%; padding: 4px 6px;
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border-strong);
+  border-radius: var(--fc-radius-sm);
+  outline: none;
+  resize: vertical;
+}
+.fc-editor input { width: 190px; }
+.fc-editor__hint { color: var(--fc-fg-muted); font-size: 10px; }
+
+/* ---- Legend & inspector ---- */
+.fc-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 6px 10px; background: var(--fc-surface); border: 1px solid var(--fc-border); border-radius: var(--fc-radius-sm); }
+.fc-legend span { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--fc-fg-secondary); }
+.fc-legend i { width: 14px; height: 2px; border-radius: 2px; display: inline-block; }
+
+.fc-inspector {
+  position: absolute; inset: 0 0 0 auto; z-index: 10;
+  display: flex; flex-direction: column; gap: 14px;
+  width: 320px; height: 100%; padding: 18px;
+  overflow-y: auto;
+  background: var(--fc-surface);
+  border-left: 1px solid var(--fc-border);
+  font-size: 12px; line-height: 1.55;
+}
+.fc-inspector h2 { margin: 0; font-size: 16px; }
+.fc-inspector h3 { margin: 0; font-size: 11px; color: var(--fc-fg-muted); font-weight: 600; }
+.fc-inspector ul, .fc-inspector ol { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.fc-inspector__meta { color: var(--fc-fg-muted); }
+.fc-inspector__section { display: flex; flex-direction: column; gap: 6px; }
+.fc-inspector__section-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.fc-inspector__section-head .fc-icon-button { opacity: 1; display: flex; align-items: center; gap: 3px; font-size: 10px; }
+.fc-inspector__link { all: unset; display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border: 1px solid var(--fc-border); border-radius: var(--fc-radius-sm); font-size: 12px; cursor: pointer; }
+.fc-inspector__link:hover { border-color: var(--fc-border-strong); }
+.fc-hotspot-ref { display: flex; gap: 8px; }
+.fc-hotspot-ref__index { display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: var(--fc-primary); color: #fff; font-size: 10px; font-weight: 700; }
+
+.react-flow__attribution { opacity: 0.35; }
