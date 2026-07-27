@@ -1,23 +1,9 @@
 # Flow canvas — designer playbook
 
-For designers who want a flow map of their own feature without writing any of it. You
-give Claude the feature; it gives you a canvas inside the app, and you edit the notes
-yourself.
+Gives you a full overview of your flows — screens, arrow connectors and the working prototype in one place, generated from the running app instead of redrawn in Figma.
 
-## What it replaces
-
-The Figma board of exported screens with arrows between them. That board is a copy of the
-product made by hand: stale as soon as anyone ships, expensive to keep current, and its
-connectors point at boxes rather than at buttons. The clickable prototype is a second
-file that drifts from it.
-
-Here the overview and the prototype are the same artifact, and neither is hand-made — the
-screens are captured from the running app, the arrows leave the actual controls with
-their conditions written on them, every card opens the state for real, and your notes
-live in the repo next to the code.
-
-Keep using Figma for what isn't built yet. Use this for what is, so the gaps between
-design and code are impossible to miss.
+For designers who want that without writing any of it: you give Claude the feature, it
+gives you a canvas inside the app, and you edit the notes yourself.
 
 ## Once, per machine
 
