@@ -10,6 +10,48 @@ ask Claude to map a feature and get the same result every time.
 ![A lane of the demo canvas: three whole screens, arrows leaving the buttons that cause
 them, notes under each card](docs/canvas.png)
 
+## Why this exists
+
+Most teams keep the flow overview in Figma: export the screens, arrange them on a board,
+draw connectors between them, annotate. It's the artifact everyone opens to answer "what
+happens when I click this?"
+
+The trouble is what that board actually is — **a copy of the product, made by hand.**
+
+- It's stale the moment someone ships a change, and nothing tells you it's stale.
+- Keeping it current is manual work nobody has time for: re-export, re-place, re-draw.
+- The connectors point at boxes, not at buttons. "This screen leads to that screen" —
+  but from *which* control, under *which* condition?
+- The overview and the prototype are two different files. The board is readable but
+  dead; the prototype is clickable but you can't see the shape of the whole flow. You
+  end up maintaining both, and they disagree.
+- Nothing on that board is the real thing. It's a picture of a build, one commit behind
+  at best.
+
+**The end goal here is one artifact where the overview and the prototype are the same
+thing, and neither is hand-made.**
+
+- The **overview** is generated from the running app. One command re-shoots every
+  screen, so it's a snapshot of what's actually built — not a redrawing of it.
+- The **arrows** leave the exact control that causes the navigation, with the action and
+  the condition written on them. No ambiguity about which button goes where.
+- The **prototype** is right there: every card links to that state running for real, and
+  "Live screens" embeds the real, clickable component inside the card. Read the shape of
+  the flow and click through it in the same view.
+- The **annotations** live next to the screens, are edited by designers on the canvas,
+  and are written back to a JSON file in the repo — so they review like code and travel
+  with the branch instead of rotting on a board nobody opened.
+
+What that removes: no exporting screens to Figma, no redrawing connectors after every
+change, no "which board is current?", no separate prototype file to keep in sync, and no
+meeting to explain what connects to what.
+
+**Where Figma is still the right tool:** designing what doesn't exist yet. Exploration,
+visual craft, options nobody has built. This is for the other half of the job —
+documenting what *is* built, or half-built, and making the gaps between design and code
+impossible to miss. In practice you draw in Figma and document here, and the two stop
+competing to be the source of truth.
+
 ## What makes it different from a boxes-and-arrows diagram
 
 - **Whole screens, entry points included.** Every node is a full-page capture — nav bar,

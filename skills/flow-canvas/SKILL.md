@@ -6,6 +6,11 @@ description: Build an interactive flow canvas — a React Flow map of every scre
 # Flow Canvas
 
 Turns a product area into a browsable map that lives **inside the app it documents**.
+
+It exists to replace the hand-made Figma flow board: the overview and the clickable
+prototype become one artifact, generated from the running app rather than redrawn after
+every change. Figma stays the tool for what isn't built yet.
+
 Three properties make it worth the effort, and all three are load-bearing:
 
 1. **Whole screens, entry points included.** A cropped modal is not a flow. Every node
